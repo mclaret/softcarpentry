@@ -1,0 +1,83 @@
+% Setting github locally
+
+mkdir git_folder
+cd git_folder
+git init
+git config --global user.name "mclaret"
+git config --global user.email "mclaret@uw.edu"
+git config --global color.ui "auto"  	%color configuration
+git config --list                    	%list of settings set
+git config --help			%list of available setting
+
+NOTE: Colors can be change within ~/.gitconfig file. See gitconfig_color_template
+%=========================
+% Committing changes
+
+vi mar.txt		 % create file
+git status		 % It shows the STAGING area! Untracked (unstaged) changes are in red.
+git add mars.txt	 % add file to commit
+git status		 % Tracked (staged) changes turn green. This identifies the files in the staging area to be tracked on the repo.
+git reset HEAD mars.txt  % unstages changes staged. Turns red again.
+git reset HEAD *	 % unstages all files staged
+git add mars.txt	 % Stage changes again.
+git commit -m "Initial mars exploration" % Changes are included in the local REPO. Files change dissapear from the staging area. -m option allows to include the comment within the command line
+git log			 % shows to changes made in the REPO
+
+Flow of changes to track:
+LOCAL repo --add--> STAGING area --commit--> changes are tracked in the REPO
+The advantatge of having a staging area is that it allows one to play/mess with files before modifying the official repo.
+Github does NOT keep track of changes automatically as google docs does for instance.
+
+vi mars.txt  		% modify the file
+git diff		% show differences between the unstaged file and the same file in the repo
+git add mars.txt
+git commit mars.txt 	% Now write on screen explanation of the changes. The default editor is vim and can be set with git config. 
+git log			% Each commit has a unique identifier
+git log -n		% Only show last n number of commits
+git log --oneline 	% Compact format of showing the commits
+git log --oneline --graph --all --decorate
+
+%=========================0
+% Create a folder in the repo
+
+mkdir samples	
+git status 		% The folder is not seen in the staging area
+touch ./samples/a.dat	% Touch created a void file
+git status		% Git is recognising the new dir because there is a file on it
+git add ./samples/a.dat 
+git commit -m "Added folder in the dir"
+
+Note: one can commit changes within the subdirectory as well in order to create a folder.
+  Github keeps track of it. You CANNOT do another git init within the new folder (subdirectory)!
+
+% Adding all the files within a folder at once
+touch ./experiments/e1.txt
+touch ./experiments/e2.txt
+touch ./experiments/e3.txt
+
+git add experiments
+git commit -m "Added new folder experiments"
+touch ./experiments/e4.txt
+git add experiments
+git commit -m "new file in experiments"
+
+%===================
+Reference a prior repo
+
+vi ./experiments/e1.txt
+git add ./experiments/e1.txt
+git commit -m "Exp1"
+
+git diff ./experiments/e1.txt 		% Checks the current version of the repo in HEAD
+git diff HEAD ./experiments/e1.txt 	% Same as before
+git diff HEAD~1 ./experiments/e1.txt	% Checks differences in one prior version in HEAD
+git diff HEAD~2 ./experiments/e1.txt	% Checks differences two prior versions in HEAD. New changes are in green
+git diff db5e187 ./experiments/e1.txt   % One can also use the identifier of a given commit (do git log --oneline to see identifiers)
+
+%===================
+Ignore specific files to track with git
+
+In the same directory where .git is add the following file
+vi .gitignore  % Specify files to ignore there such as .gitignore. If you one to ignore specific formats do *.pdf.
+git status
+git status --ignore

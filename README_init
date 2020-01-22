@@ -81,3 +81,16 @@ In the same directory where .git is add the following file
 vi .gitignore  % Specify files to ignore there such as .gitignore. If you one to ignore specific formats do *.pdf.
 git status
 git status --ignore
+
+%==============
+How to collaborate
+
+Create repo online in github account (plus symbol in account signin)
+The name of the repo online does not need to match the local repo name
+
+git remote add origin git@github.com:mclaret/softcarpentry.git	% origin is the name of the remote repo. git@github: is the path of the remote
+git remote -v		% check to path of the remote
+git push origin master	% git push name_of_remote_repo name_of_local_repo_branch_to_push. These uploads files and commit history
+
+
+
